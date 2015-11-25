@@ -48,6 +48,7 @@ module.exports = function (RED) {
     this.operation = n.operation;
     this.filename = n.filename;
     this.localFilename = n.localFilename;
+    this.workdir = n.workdir;
     this.ftpConfig = RED.nodes.getNode(this.ftp);
 
     if (this.ftpConfig) {
@@ -56,6 +57,8 @@ module.exports = function (RED) {
       node.on('input', function (msg) {
         var filename = node.filename || msg.filename || '';
         var localFilename = node.localFilename || msg.localFilename || '';
+	var workdir = node.workdir || msg.workdir || '';
+
         this.sendMsg = function (err, result) {
           if (err) {
             node.error(err.toString());
@@ -80,6 +83,7 @@ module.exports = function (RED) {
         conn.on('ready', function () {
           switch (node.operation) {
             case 'list':
+              conn.cwd(workdir, node.sendMsg);
               conn.list(node.sendMsg);
               break;
             case 'get':
