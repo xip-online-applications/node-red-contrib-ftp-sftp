@@ -95,6 +95,10 @@
     <input type="text" id="node-input-localFilename" placeholder="Local Filename">
   </div>
   <div class="form-row">
+    <label for="node-input-workdir"><i class="fa fa-tag"></i> Working Directory</label>
+    <input type="text" id="node-input-workdir" placeholder="Working Directory">
+  </div>
+  <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
     <input type="text" id="node-input-name" placeholder="Name">
   </div>
@@ -109,6 +113,7 @@
       operation: { value: 'list', required: true },
       filename: { value: '' },
       localFilename: { value: '' },
+      workdir: { value: '' },
       name: { value: '' }
     },
     inputs: 1,
