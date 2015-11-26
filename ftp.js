@@ -58,6 +58,7 @@ module.exports = function (RED) {
         var filename = node.filename || msg.filename || '';
         var localFilename = node.localFilename || msg.localFilename || '';
 	var workdir = node.workdir || msg.workdir || '';
+	var localWorkDir = '/tmp/';
 
         this.sendMsg = function (err, result) {
           if (err) {
@@ -67,8 +68,8 @@ module.exports = function (RED) {
           node.status({});
           if (node.operation == 'get') {
             result.once('close', function() { conn.end(); });
-            result.pipe(fs.createWriteStream(localFilename));
-            msg.payload = 'Get operation successful. ' + localFilename;
+            result.pipe(fs.createWriteStream(localWorkDir + filename));
+            msg.payload = 'Get operation successful. ' + localWorkDir + filename;
           } else if (node.operation == 'put') {
             conn.end();
             msg.payload = 'Put operation successful.';
@@ -83,11 +84,10 @@ module.exports = function (RED) {
         conn.on('ready', function () {
           switch (node.operation) {
             case 'list':
-              conn.cwd(workdir, node.sendMsg);
-              conn.list(node.sendMsg);
+              conn.list(workdir, node.sendMsg);
               break;
             case 'get':
-              conn.get(filename, node.sendMsg);
+              conn.get(workdir + filename, node.sendMsg);
               break;
             case 'put':
               conn.put(localFilename, filename, node.sendMsg);
