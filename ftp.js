@@ -49,6 +49,7 @@ module.exports = function (RED) {
     this.filename = n.filename;
     this.localFilename = n.localFilename;
     this.workdir = n.workdir;
+    this.savedir = n.savedir;
     this.ftpConfig = RED.nodes.getNode(this.ftp);
 
     if (this.ftpConfig) {
@@ -58,7 +59,7 @@ module.exports = function (RED) {
         var filename = node.filename || msg.filename || '';
         var localFilename = node.localFilename || msg.localFilename || '';
 	var workdir = node.workdir || msg.workdir || '';
-	var localWorkDir = '/tmp/';
+	var savedir = node.savedir || msg.savedir || '';
 
         this.sendMsg = function (err, result) {
           if (err) {
@@ -68,8 +69,8 @@ module.exports = function (RED) {
           node.status({});
           if (node.operation == 'get') {
             result.once('close', function() { conn.end(); });
-            result.pipe(fs.createWriteStream(localWorkDir + filename));
-            msg.payload = 'Get operation successful. ' + localWorkDir + filename;
+            result.pipe(fs.createWriteStream(savedir + filename));
+            msg.payload = 'Get operation successful. ' + savedir + filename;
           } else if (node.operation == 'put') {
             conn.end();
             msg.payload = 'Put operation successful.';
