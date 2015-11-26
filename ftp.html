@@ -87,12 +87,16 @@
     </select>
   </div>
   <div class="form-row">
-    <label for="node-input-workdir"><i class="fa fa-file"></i> Working Directory</label>
+    <label for="node-input-workdir"><i class="fa fa-folder-open"></i> Working Directory</label>
     <input type="text" id="node-input-workdir" placeholder="Working Directory">
   </div>
   <div class="form-row input-filename-row hidden">
     <label for="node-input-filename"><i class="fa fa-file"></i> Filename</label>
     <input type="text" id="node-input-filename" placeholder="Filename">
+  </div>
+  <div class="form-row input-savedir-row hidden">
+    <label for="node-input-savedir"><i class="fa fa-folder-open"></i> Save Directory</label>
+    <input type="text" id="node-input-savedir" placeholder="Save Directory">
   </div>
   <div class="form-row input-localFilename-row hidden">
     <label for="node-input-localFilename"><i class="fa fa-file"></i> Local Filename</label>
@@ -114,6 +118,7 @@
       filename: { value: '' },
       localFilename: { value: '' },
       workdir: { value: '' },
+      savedir: { value: '' },
       name: { value: '' }
     },
     inputs: 1,
@@ -127,6 +132,7 @@
       return this.name ? 'node_label_italic' : '';
     },
     oneditprepare: function () {
+      var savedir = $(".input-savedir-row");
       var filename = $(".input-filename-row");
       var localFilename = $(".input-localFilename-row");
       $("#node-input-operation").change(function () {
@@ -134,12 +140,19 @@
         console.log(id);
         if (id == 'list') {
           filename.hide();
+          savedir.hide();
           localFilename.hide();
         } else if (id == 'put') {
           filename.show();
+          savedir.hide();
           localFilename.show();
+        } else if (id =='get') {
+          filename.show();
+          savedir.show();
+          localFilename.hide();
         } else {
           filename.show();
+          savedir.hide();
           localFilename.hide();
         }
       });
