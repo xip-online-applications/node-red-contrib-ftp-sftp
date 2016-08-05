@@ -35,7 +35,7 @@ module.exports = function (RED) {
     };
   }
 
-  RED.nodes.registerType('ftp', FtpNode, {  });
+  RED.nodes.registerType('ftp', FtpNode);
 
   function FtpInNode(n) {
     RED.nodes.createNode(this, n);
