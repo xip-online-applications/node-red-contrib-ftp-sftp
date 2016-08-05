@@ -1,4 +1,4 @@
 node_modules
 test
 .DS_Store
-.npm-debug.log
+npm-debug.log
