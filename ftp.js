@@ -22,25 +22,20 @@ module.exports = function (RED) {
   function FtpNode(n) {
     RED.nodes.createNode(this, n);
     var node = this;
-    var credentials = RED.nodes.getCredentials(n.id);
     this.options = {
       'host': n.host || 'localhost',
       'port': n.port || 21,
       'secure': n.secure || false,
       'secureOptions': n.secureOptions,
       'user': n.user || 'anonymous',
-      'password': credentials.password || 'anonymous@',
+      'password': n.password || 'anonymous@',
       'connTimeout': n.connTimeout || 10000,
       'pasvTimeout': n.pasvTimeout || 10000,
       'keepalive': n.keepalive || 10000
     };
   }
 
-  RED.nodes.registerType('ftp', FtpNode, {
-    credentials: {
-      password: { type: 'password' }
-    }
-  });
+  RED.nodes.registerType('ftp', FtpNode, {  });
 
   function FtpInNode(n) {
     RED.nodes.createNode(this, n);
