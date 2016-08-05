@@ -1,0 +1,29 @@
+{
+  "name": "node-red-contrib-ftp-env",
+  "version": "1.0.0",
+  "description": "A node-red node that support FTP file transfer using $() environment variables to control the ftp connection details",
+  "main": "ftp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redconnect-io/node-red-contrib-ftp.git"
+  },
+  "keywords": [
+    "node-red",
+    "ftp",
+    "redconnect"
+  ],
+  "node-red": {
+    "nodes": {
+      "ftp": "ftp.js"
+    }
+  },
+  "author": "D Hartveld (Red Ant)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/redconnect-io/node-red-contrib-ftp/issues"
+  },
+  "homepage": "https://github.com/redconnect-io/node-red-contrib-ftp#readme"
+}
