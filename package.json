@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/redconnect-io/node-red-contrib-ftp/issues"
   },
-  "homepage": "https://github.com/redconnect-io/node-red-contrib-ftp#readme"
+  "homepage": "https://github.com/redconnect-io/node-red-contrib-ftp#readme",
+  "dependencies": {
+    "ftp": "^0.3.10"
+  }
 }
