@@ -51,50 +51,63 @@ module.exports = function (RED) {
       var conn = new ftp();
       var node = this;
       node.on('input', function (msg) {
-        var filename = node.filename || msg.filename || '';
-        var localFilename = node.localFilename || msg.localFilename || '';
-	var workdir = node.workdir || msg.workdir || '';
-	var savedir = node.savedir || msg.savedir || '';
 
-        this.sendMsg = function (err, result) {
-          if (err) {
-            node.error(err.toString());
-            node.status({ fill: 'red', shape: 'ring', text: 'failed' });
-          }
-          node.status({});
-          if (node.operation == 'get') {
-            result.once('close', function() { conn.end(); });
-            result.pipe(fs.createWriteStream(savedir + filename));
-            msg.payload = 'Get operation successful. ' + savedir + filename;
-          } else if (node.operation == 'put') {
-            conn.end();
-            msg.payload = 'Put operation successful.';
-          } else {
-            conn.end();
-            msg.payload = result;
-          }
-          msg.filename = filename;
-          msg.localFilename = localFilename;
-          node.send(msg);
-        };
-        conn.on('ready', function () {
-          switch (node.operation) {
-            case 'list':
-              conn.list(workdir, node.sendMsg);
-              break;
-            case 'get':
-              conn.get(workdir + filename, node.sendMsg);
-              break;
-            case 'put':
-              conn.put(localFilename, filename, node.sendMsg);
-              break;
-            case 'delete':
-              conn.delete(filename, node.sendMsg);
-              break;
-          }
-        });
-        conn.connect(node.ftpConfig.options);
-      });
+        try {
+          
+        
+          var filename = node.filename || msg.filename || '';
+          var localFilename = node.localFilename || msg.localFilename || '';
+          var workdir = node.workdir || msg.workdir || '';
+          var savedir = node.savedir || msg.savedir || '';
+
+          this.sendMsg = function (err, result) {
+            if (err) {
+              node.error(err.toString());
+              node.status({ fill: 'red', shape: 'ring', text: 'failed' });
+            }
+            node.status({});
+            if (node.operation == 'get') {
+              result.once('close', function() { conn.end(); });
+              result.pipe(fs.createWriteStream(savedir + filename));
+              msg.payload = 'Get operation successful. ' + savedir + filename;
+            } else if (node.operation == 'put') {
+              conn.end();
+              msg.payload = 'Put operation successful.';
+            } else {
+              conn.end();
+              msg.payload = result;
+            }
+            msg.filename = filename;
+            msg.localFilename = localFilename;
+            node.send(msg);
+          };
+          conn.on('ready', function () {
+            switch (node.operation) {
+              case 'list':
+                conn.list(workdir, node.sendMsg);
+                break;
+              case 'get':
+                conn.get(workdir + filename, node.sendMsg);
+                break;
+              case 'put':
+                conn.put(localFilename, filename, node.sendMsg);
+                break;
+              case 'delete':
+                conn.delete(filename, node.sendMsg);
+                break;
+            }
+          });
+          
+          conn.on('error', function(error) {
+            node.error(error);
+          });
+
+          conn.connect(node.ftpConfig.options);
+
+      } catch (error) {
+          node.error(error);
+      }
+    });
     } else {
       this.error('missing ftp configuration');
     }
