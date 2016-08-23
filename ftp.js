@@ -48,12 +48,13 @@ module.exports = function (RED) {
     this.ftpConfig = RED.nodes.getNode(this.ftp);
 
     if (this.ftpConfig) {
-      var conn = new ftp();
-      var node = this;
-      node.on('input', function (msg) {
 
+      var node = this;
+
+      node.on('input', function (msg) {
         try {
           
+          var conn = new ftp();
         
           var filename = node.filename || msg.filename || '';
           var localFilename = node.localFilename || msg.localFilename || '';
@@ -81,6 +82,7 @@ module.exports = function (RED) {
             msg.localFilename = localFilename;
             node.send(msg);
           };
+
           conn.on('ready', function () {
             switch (node.operation) {
               case 'list':
