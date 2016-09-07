@@ -57,9 +57,13 @@ module.exports = function (RED) {
           var conn = new ftp();
         
           var filename = node.filename || msg.filename || '';
-          var localFilename = node.localFilename || msg.localFilename || '';
+          var localFilename = node.localFilename || msg.localFilename;
           var workdir = node.workdir || msg.workdir || '';
           var savedir = node.savedir || msg.savedir || '';
+
+          if (!localFilename) {
+            localFilename = msg.payload ? Buffer.from(msg.payload) : '';
+          }
 
           this.sendMsg = function (err, result) {
             if (err) {
