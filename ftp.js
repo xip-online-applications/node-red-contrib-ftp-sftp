@@ -62,7 +62,7 @@ module.exports = function (RED) {
           var savedir = node.savedir || msg.savedir || '';
 
           if (!localFilename) {
-            localFilename = msg.payload ? Buffer.from(msg.payload) : '';
+            localFilename = msg.payload ? new Buffer(msg.payload, 'utf8') : '';
           }
 
           this.sendMsg = function (err, result) {
