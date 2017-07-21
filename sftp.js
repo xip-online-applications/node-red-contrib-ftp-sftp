@@ -24,14 +24,14 @@ module.exports = function (RED) {
     var node = this;
     this.options = {
       'host': n.host || 'localhost',
-      'port': n.port || 21,
-      'secure': n.secure || false,
-      'secureOptions': n.secureOptions,
-      'user': n.user || 'anonymous',
-      'password': n.password || 'anonymous@',
-      'connTimeout': n.connTimeout || 10000,
-      'pasvTimeout': n.pasvTimeout || 10000,
-      'keepalive': n.keepalive || 10000
+      'port': n.port || 22,
+        'username': n.user,
+        'password': n.password
+      //'secure': n.secure || false,
+      //'secureOptions': n.secureOptions,
+      //'connTimeout': n.connTimeout || 10000,
+      //'pasvTimeout': n.pasvTimeout || 10000,
+      //'keepalive': n.keepalive || 10000
     };
   }
 
