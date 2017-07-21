@@ -16,7 +16,7 @@ Acknowledgements
 
 The node-red-contrib-force uses the following open source software:
 
-- [node-ftp] (https://github.com/HardingPoint/node-red-contrib-ftp-sftp): node-ftp is an FTP and SFTP client module for node.js that provides an asynchronous interface for communicating with an FTP server.
+- [node-ftp-sftp] (https://github.com/HardingPoint/node-red-contrib-ftp-sftp): node-ftp is an FTP and SFTP client module for node.js that provides an asynchronous interface for communicating with an FTP server.
 
 License
 -------
