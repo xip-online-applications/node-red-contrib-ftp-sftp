@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/redconnect-io/node-red-contrib-ftp#readme",
   "dependencies": {
-    "ftp": "^0.3.10"
+    "ftp": "^0.3.10",
+    "ssh2-sftp-client": "^1.1.0"
   }
 }
