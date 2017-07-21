@@ -1,8 +1,8 @@
-node-red-contrib-ftp
+node-red-contrib-ftp-sftp
 ========================
-A Node-RED node to FTP Server.
+A Node-RED node to FTP and SFTP Client.
 
-[![NPM](https://nodei.co/npm/node-red-contrib-ftp.png?downloads=true)](https://nodei.co/npm/node-red-contrib-ftp/)
+[![NPM](https://nodei.co/npm/node-red-contrib-ftp-sftp.png?downloads=true)](https://github.com/HardingPoint/node-red-contrib-ftp-sftp)
 
 Install
 -------
@@ -16,9 +16,9 @@ Acknowledgements
 
 The node-red-contrib-force uses the following open source software:
 
-- [node-ftp] (https://github.com/mscdex/node-ftp): node-ftp is an FTP client module for node.js that provides an asynchronous interface for communicating with an FTP server.
+- [node-ftp] (https://github.com/HardingPoint/node-red-contrib-ftp-sftp): node-ftp is an FTP and SFTP client module for node.js that provides an asynchronous interface for communicating with an FTP server.
 
 License
 -------
 
-See [license] (https://github.com/joeartsea/node-red-contrib-ftp/blob/master/LICENSE) (Apache License Version 2.0).
+See [license] (https://github.com/HardingPoint/node-red-contrib-ftp-sftp/blob/master/LICENSE) (Apache License Version 2.0).
