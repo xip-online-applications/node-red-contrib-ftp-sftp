@@ -2,14 +2,14 @@ node-red-contrib-ftp-sftp
 ========================
 A Node-RED node to FTP and SFTP Client.
 
-[![NPM](https://nodei.co/npm/node-red-contrib-ftp-sftp.png?downloads=true)](https://github.com/HardingPoint/node-red-contrib-ftp-sftp)
+(https://github.com/HardingPoint/node-red-contrib-ftp-sftp)
 
 Install
 -------
 
 Run the following command in the root directory of your Node-RED install
 
-    npm install node-red-contrib-ftp
+    npm install node-red-contrib-ftp-sftp
 
 Acknowledgements
 ----------------
