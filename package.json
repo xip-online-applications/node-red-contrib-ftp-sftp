@@ -2,7 +2,7 @@
   "name": "node-red-contrib-ftp-sftp",
   "version": "1.5.0",
   "description": "A node-red node that support FTP file transfer using $() environment variables to control the ftp connection details",
-  "main": "ftp.js",
+  "main": "sftp.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
