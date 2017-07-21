@@ -119,4 +119,4 @@ module.exports = function (RED) {
     }
   }
   RED.nodes.registerType('sftp in', SFtpInNode);
-}
+};
