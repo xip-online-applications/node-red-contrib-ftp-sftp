@@ -16,7 +16,8 @@
 
 module.exports = function (RED) {
   'use strict';
-  var sftp = require('ssh2-sftp-client');
+
+  var sftp = require('ssh2').Client;
   var fs = require('fs');
 
   function SFtpNode(n) {
@@ -24,14 +25,13 @@ module.exports = function (RED) {
     var node = this;
     this.options = {
       'host': n.host || 'localhost',
-      'port': n.port || 22,
+        'port': n.port || 22,
         'username': n.user,
-        'password': n.password
-      //'secure': n.secure || false,
-      //'secureOptions': n.secureOptions,
-      //'connTimeout': n.connTimeout || 10000,
-      //'pasvTimeout': n.pasvTimeout || 10000,
-      //'keepalive': n.keepalive || 10000
+        'password': n.password,
+        'algorithms': {
+            hmac: ['hmac-sha2-256', 'hmac-sha2-512', 'hmac-sha1', 'hmac-sha1-96'],
+            cipher: ['aes256-cbc']
+        }
     };
   }
 
@@ -48,14 +48,10 @@ module.exports = function (RED) {
     this.sftpConfig = RED.nodes.getNode(this.sftp);
 
     if (this.sftpConfig) {
-
       var node = this;
-
       node.on('input', function (msg) {
         try {
-          
           var conn = new sftp();
-        
           var filename = node.filename || msg.filename || '';
           var localFilename = node.localFilename || msg.localFilename;
           var workdir = node.workdir || msg.workdir || '';
@@ -90,7 +86,8 @@ module.exports = function (RED) {
           conn.on('ready', function () {
             switch (node.operation) {
               case 'list':
-                conn.list(workdir, node.sendMsg);
+                  conn.readdir(workdir, node.sendMsg);
+                // conn.list(workdir, node.sendMsg);
                 break;
               case 'get':
                 conn.get(workdir + filename, node.sendMsg);
