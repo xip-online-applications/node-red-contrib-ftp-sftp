@@ -71,17 +71,24 @@ module.exports = function (RED) {
         try {
           var conn = new sftp();
 
+          this.sendMsg = function (err, result) {
+              if (err) {
+                  node.error(err.toString());
+                  node.status({ fill: 'red', shape: 'ring', text: 'failed' });
+              }
+              node.status({});
+              conn.end();
+              msg.payload = result;
+              node.send(msg);
+          };
+
           conn.on('ready', function () {
               switch (node.operation) {
                   case 'list':
                       var remotePathToList = '/Test/Incoming';
                       conn.sftp(function (err, sftp) {
                           if (err) throw err;
-                          sftp.readdir(remotePathToList, function (err, list) {
-                              if (err) throw err;
-                              console.dir(list);
-                              conn.end();
-                          });
+                          sftp.readdir(remotePathToList, node.sendMsg);
                       });
                       break;
                 }
