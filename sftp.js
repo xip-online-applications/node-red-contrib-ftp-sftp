@@ -23,16 +23,17 @@ module.exports = function (RED) {
   function SFtpNode(n) {
     RED.nodes.createNode(this, n);
     var node = this;
+
     this.options = {
-      'host': n.host || 'localhost',
-        'port': n.port || 22,
-        'username': n.user,
-        'password': n.password,
-        'algorithms': {
-            hmac: ['hmac-sha2-256', 'hmac-sha2-512', 'hmac-sha1', 'hmac-sha1-96'],
-            cipher: ['aes256-cbc']
-        }
-    };
+          host: n.host || 'localhost',
+          port: n.port || 21,
+          username: n.username,
+          password: n.password,
+          algorithms: {
+              hmac: ['hmac-sha2-256', 'hmac-sha2-512', 'hmac-sha1', 'hmac-sha1-96'],
+              cipher: ['aes256-cbc']
+          }
+      };
   }
 
   RED.nodes.registerType('sftp', SFtpNode);
@@ -52,59 +53,26 @@ module.exports = function (RED) {
       node.on('input', function (msg) {
         try {
           var conn = new sftp();
-          var filename = node.filename || msg.filename || '';
-          var localFilename = node.localFilename || msg.localFilename;
-          var workdir = node.workdir || msg.workdir || '';
-          var savedir = node.savedir || msg.savedir || '';
-
-          if (!localFilename) {
-            localFilename = msg.payload ? new Buffer(msg.payload, 'utf8') : '';
-          }
-
-          this.sendMsg = function (err, result) {
-            if (err) {
-              node.error(err.toString());
-              node.status({ fill: 'red', shape: 'ring', text: 'failed' });
-            }
-            node.status({});
-            if (node.operation == 'get') {
-              result.once('close', function() { conn.end(); });
-              result.pipe(fs.createWriteStream(savedir + filename));
-              msg.payload = 'Get operation successful. ' + savedir + filename;
-            } else if (node.operation == 'put') {
-              conn.end();
-              msg.payload = 'Put operation successful.';
-            } else {
-              conn.end();
-              msg.payload = result;
-            }
-            msg.filename = filename;
-            msg.localFilename = localFilename;
-            node.send(msg);
-          };
 
           conn.on('ready', function () {
-            switch (node.operation) {
-              case 'list':
-                  conn.readdir(workdir, node.sendMsg);
-                // conn.list(workdir, node.sendMsg);
-                break;
-              case 'get':
-                conn.get(workdir + filename, node.sendMsg);
-                break;
-              case 'put':
-                conn.put(localFilename, filename, node.sendMsg);
-                break;
-              case 'delete':
-                conn.delete(filename, node.sendMsg);
-                break;
-            }
-          });
+              switch (node.operation) {
+                  case 'list':
+                      var remotePathToList = '/Test/Incoming';
+                      conn.sftp(function (err, sftp) {
+                          if (err) throw err;
+                          sftp.readdir(remotePathToList, function (err, list) {
+                              if (err) throw err;
+                              console.dir(list);
+                              conn.end();
+                          });
+                      });
+                      break;
+                }
+              });
           
           conn.on('error', function(error) {
             node.error(error);
           });
-
           conn.connect(node.sftpConfig.options);
 
       } catch (error) {
