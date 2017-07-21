@@ -14,6 +14,11 @@
  * limitations under the License.
  **/
 
+
+// STILL VALIDATING CONNECTIVITY
+//  -- Still need to add additional hmac, and cipher options
+//  -- DID validate it works with list/dir
+
 module.exports = function (RED) {
   'use strict';
 
