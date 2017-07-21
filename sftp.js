@@ -14,6 +14,18 @@
  * limitations under the License.
  **/
 
+// --------------------------------------------------------------------------------------------------------------
+/*
+
+TODO
+    Add Put
+    Add Get
+    Add Delete
+
+ http://ourcodeworld.com/articles/read/133/how-to-create-a-sftp-client-with-node-js-ssh2-in-electron-framework
+
+*/
+// --------------------------------------------------------------------------------------------------------------
 
 // STILL VALIDATING CONNECTIVITY
 //  -- Still need to add additional hmac, and cipher options
