@@ -29,6 +29,41 @@
     <label for="node-config-input-password"><i class="fa fa-lock"></i> Password</label>
     <input type="text" id="node-config-input-password">
   </div>
+  <div class="form-row">
+    <label for="node-config-input-hmac"><i class="fa fa-wrench"></i>hmac</label>
+    <select multiple type="text" id="node-config-input-hmac" size="9">
+        <option value="hmac-sha2-256">hmac-sha2-256</option>
+        <option value="hmac-sha2-512">hmac-sha2-512</option>
+        <option value="hmac-sha1">hmac-sha1</option>
+        <option value="hmac-md5">hmac-md5</option>
+        <option value="hmac-sha2-256-96">hmac-sha2-256-96</option>
+        <option value="hmac-sha2-512-96">hmac-sha2-512-96</option>
+        <option value="hmac-ripemd160">hmac-ripemd160</option>
+        <option value="hmac-sha1-96">hmac-sha1-96</option>
+        <option value="hmac-md5-96">hmac-md5-96</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-cipher"><i class="fa fa-wrench"></i>cipher</label>
+    <select multiple type="text" id="node-config-input-cipher" size="17">
+        <option value="aes128-ctr">aes128-ctr</option>
+        <option value="aes192-ctr">aes192-ctr</option>
+        <option value="aes256-ctr">aes256-ctr</option>
+        <option value="aes128-gcm">aes128-gcm (node v0.11.12 or newer)</option>
+        <option value="aes128-gcm@openssh.com">aes128-gcm@openssh.com (node v0.11.12 or newer)</option>
+        <option value="aes256-gcm">aes256-gcm (node v0.11.12 or newer)</option>
+        <option value="aes256-gcm@openssh.com">aes256-gcm@openssh.com (node v0.11.12 or newer)</option>
+        <option value="aes256-cbc">aes256-cbc</option>
+        <option value="aes192-cbc">aes192-cbc</option>
+        <option value="aes128-cbc">aes128-cbc</option>
+        <option value="blowfish-cbc">blowfish-cbc</option>
+        <option value="3des-cbc">3des-cbc</option>
+        <option value="arcfour256">arcfour256</option>
+        <option value="arcfour128">arcfour128</option>
+        <option value="cast128-cbc">cast128-cbc</option>
+        <option value="arcfour">arcfour</option>
+    </select>
+  </div>
 </script>
 
 <script type="text/javascript">
@@ -36,10 +71,12 @@
     category: 'config',
     color:"BurlyWood",
     defaults: {
-      host: { value: '' },
-      port: { value: '' },
-      username: { value: '' },
-      password: { value: '', required: true }
+      host: { value: 'localhost' },
+      port: { value: '22' },
+      username: { value: '', required: true },
+      password: { value: '', required: true },
+        hmac: { value: 'hmac-sha2-256,hmac-sha2-512,hmac-sha1', required: true },
+        cipher: { value: 'aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm', required: true }
     },
     label: function() {
       return this.host
@@ -77,6 +114,10 @@
     <label for="node-input-localFilename"><i class="fa fa-file"></i> Local Filename</label>
     <input type="text" id="node-input-localFilename" placeholder="Local Filename">
   </div>
+  <div class="form-row input-fileExtension-row hidden">
+    <label for="node-input-fileExtension"><i class="fa fa-file"></i>File Extension</label>
+    <input type="text" id="node-input-fileExtension" placeholder="File Extension">
+  </div>
   <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
     <input type="text" id="node-input-name" placeholder="Name">
@@ -92,6 +133,7 @@
       operation: { value: 'list', required: true },
       filename: { value: '' },
       localFilename: { value: '' },
+      fileExtension: { value: '.txt' },
       workdir: { value: '' },
       savedir: { value: '' },
       name: { value: '' }
@@ -110,6 +152,7 @@
       var savedir = $(".input-savedir-row");
       var filename = $(".input-filename-row");
       var localFilename = $(".input-localFilename-row");
+      var fileExtension = $(".input-fileExtension-row");
       $("#node-input-operation").change(function () {
         var id = $("#node-input-operation option:selected").val();
         console.log(id);
@@ -117,6 +160,7 @@
           filename.hide();
           savedir.hide();
           localFilename.hide();
+          fileExtension.hide();
         } else if (id == 'put') {
           filename.show();
           savedir.hide();
@@ -125,10 +169,12 @@
           filename.show();
           savedir.show();
           localFilename.hide();
+          fileExtension.hide();
         } else {
           filename.show();
           savedir.hide();
           localFilename.hide();
+          fileExtension.hide();
         }
       });
     }

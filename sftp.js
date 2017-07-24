@@ -42,14 +42,19 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, n);
     var node = this;
 
+    console.log("hmac: " + n.hmac);
+    console.log("cipher: " + n.cipher);
+
     this.options = {
           host: n.host || 'localhost',
           port: n.port || 21,
           username: n.username,
           password: n.password,
           algorithms: {
-              hmac: ['hmac-sha2-256', 'hmac-sha2-512', 'hmac-sha1', 'hmac-sha1-96'],
-              cipher: ['aes256-cbc']
+              // hmac: ['hmac-sha2-256', 'hmac-sha2-512', 'hmac-sha1', 'hmac-sha1-96'],
+              // cipher: ['aes256-cbc']
+              hmac: n.hmac,
+              cipher: n.cipher
           }
       };
   }
@@ -62,6 +67,7 @@ module.exports = function (RED) {
     this.operation = n.operation;
     this.filename = n.filename;
     this.localFilename = n.localFilename;
+    this.fileExtension = n.fileExtension;
     this.workdir = n.workdir;
     this.savedir = n.savedir;
     this.sftpConfig = RED.nodes.getNode(this.sftp);
@@ -86,10 +92,10 @@ module.exports = function (RED) {
           conn.on('ready', function () {
               switch (node.operation) {
                   case 'list':
-                      var remotePathToList = '/Test/Incoming';
+
                       conn.sftp(function (err, sftp) {
                           if (err) throw err;
-                          sftp.readdir(remotePathToList, node.sendMsg);
+                          sftp.readdir(node.workdir, node.sendMsg);
                       });
                       break;
                   case 'get':
@@ -98,10 +104,11 @@ module.exports = function (RED) {
                   case 'put':
                       conn.sftp(function (err, sftp) {
                           if (err) throw err;
-
                           var guid = uuid.v4();
-                          var newFile = "/Test/Incoming/testing_" + guid + ".txt";
-
+                          if (node.fileExtension==""){
+                              node.fileExtension = ".txt";
+                          }
+                          var newFile = node.workdir + guid + node.fileExtension;
                           var msgData = JSON.stringify(msg.payload);
                           console.log("newFile: " + newFile);
                           console.log("Data: " + msgData);
