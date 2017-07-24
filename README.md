@@ -1,6 +1,6 @@
 node-red-contrib-ftp-sftp
 ========================
-A Node-RED node to FTP and SFTP Client.
+A Node-RED node to FTP and SFTP Client. This is a work in progress but does work to list and put files. Please send log issues or email requests to Support@HardingPoint.com.
 
 (https://github.com/HardingPoint/node-red-contrib-ftp-sftp)
 

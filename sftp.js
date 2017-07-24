@@ -36,6 +36,7 @@ module.exports = function (RED) {
 
   var sftp = require('ssh2').Client;
   var fs = require('fs');
+  var uuid = require('node-uuid');
 
   function SFtpNode(n) {
     RED.nodes.createNode(this, n);
@@ -90,6 +91,27 @@ module.exports = function (RED) {
                           if (err) throw err;
                           sftp.readdir(remotePathToList, node.sendMsg);
                       });
+                      break;
+                  case 'get':
+                      conn.get(remotePathToList + filename, node.sendMsg);
+                      break;
+                  case 'put':
+                      conn.sftp(function (err, sftp) {
+                          if (err) throw err;
+
+                          var guid = uuid.v4();
+                          var newFile = "/Test/Incoming/testing_" + guid + ".txt";
+
+                          var msgData = JSON.stringify(msg.payload);
+                          console.log("newFile: " + newFile);
+                          console.log("Data: " + msgData);
+                          var writeStream = sftp.createWriteStream( newFile, {flags: 'w'});
+                          var payloadBuff = new Buffer(msgData);
+                          writeStream.write(payloadBuff, node.sendMsg);
+                      });
+                      break;
+                  case 'delete':
+                      //conn.delete(filename, node.sendMsg);
                       break;
                 }
               });
