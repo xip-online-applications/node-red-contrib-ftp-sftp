@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="08dd6182-4f32-45ec-ac73-14938af80fa4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sftp.html" afterPath="$PROJECT_DIR$/sftp.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sftp.js" afterPath="$PROJECT_DIR$/sftp.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -21,8 +20,8 @@
       <file leaf-file-name="sftp.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sftp.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-472">
-              <caret line="48" column="38" lean-forward="true" selection-start-line="48" selection-start-column="38" selection-end-line="48" selection-end-column="38" />
+            <state relative-caret-position="73">
+              <caret line="91" column="30" lean-forward="false" selection-start-line="91" selection-start-column="30" selection-end-line="91" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -211,12 +210,12 @@
       <workItem from="1500642462291" duration="1827000" />
       <workItem from="1500649360659" duration="4689000" />
       <workItem from="1500656186429" duration="3889000" />
-      <workItem from="1500767981788" duration="9415000" />
+      <workItem from="1500767981788" duration="9700000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19820000" />
+    <option name="totallyTimeSpent" value="20105000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="828" extended-state="0" />
@@ -302,7 +301,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sftp.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
+        <state relative-caret-position="-911">
           <caret line="32" column="38" lean-forward="false" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
           <folding />
         </state>
@@ -310,8 +309,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sftp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-472">
-          <caret line="48" column="38" lean-forward="true" selection-start-line="48" selection-start-column="38" selection-end-line="48" selection-end-column="38" />
+        <state relative-caret-position="73">
+          <caret line="91" column="30" lean-forward="false" selection-start-line="91" selection-start-column="30" selection-end-line="91" selection-end-column="30" />
           <folding />
         </state>
       </provider>

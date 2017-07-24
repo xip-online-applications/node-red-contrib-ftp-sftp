@@ -18,7 +18,6 @@
 /*
 
 TODO
-    Add Put
     Add Get
     Add Delete
 
@@ -28,7 +27,6 @@ TODO
 // --------------------------------------------------------------------------------------------------------------
 
 // STILL VALIDATING CONNECTIVITY
-//  -- Still need to add additional hmac, and cipher options
 //  -- DID validate it works with list/dir
 
 module.exports = function (RED) {
@@ -92,14 +90,13 @@ module.exports = function (RED) {
           conn.on('ready', function () {
               switch (node.operation) {
                   case 'list':
-
                       conn.sftp(function (err, sftp) {
                           if (err) throw err;
                           sftp.readdir(node.workdir, node.sendMsg);
                       });
                       break;
                   case 'get':
-                      conn.get(remotePathToList + filename, node.sendMsg);
+                      // Still need to add this.
                       break;
                   case 'put':
                       conn.sftp(function (err, sftp) {
@@ -110,15 +107,15 @@ module.exports = function (RED) {
                           }
                           var newFile = node.workdir + guid + node.fileExtension;
                           var msgData = JSON.stringify(msg.payload);
-                          console.log("newFile: " + newFile);
-                          console.log("Data: " + msgData);
+                          //console.log("newFile: " + newFile);
+                          //console.log("Data: " + msgData);
                           var writeStream = sftp.createWriteStream( newFile, {flags: 'w'});
                           var payloadBuff = new Buffer(msgData);
                           writeStream.write(payloadBuff, node.sendMsg);
                       });
                       break;
                   case 'delete':
-                      //conn.delete(filename, node.sendMsg);
+                      // Still need to add this.
                       break;
                 }
               });
