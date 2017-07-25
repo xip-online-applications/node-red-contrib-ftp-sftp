@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="08dd6182-4f32-45ec-ac73-14938af80fa4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sftp.html" afterPath="$PROJECT_DIR$/sftp.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sftp.js" afterPath="$PROJECT_DIR$/sftp.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -202,12 +200,12 @@
       <workItem from="1500649360659" duration="4689000" />
       <workItem from="1500656186429" duration="3889000" />
       <workItem from="1500767981788" duration="10169000" />
-      <workItem from="1500988632354" duration="4569000" />
+      <workItem from="1500988632354" duration="4638000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25143000" />
+    <option name="totallyTimeSpent" value="25212000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="829" extended-state="0" />
