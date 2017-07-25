@@ -114,6 +114,10 @@
     <label for="node-input-localFilename"><i class="fa fa-file"></i> Local Filename</label>
     <input type="text" id="node-input-localFilename" placeholder="Local Filename">
   </div>
+  <div class="form-row input-fileContents-row hidden">
+    <label for="node-input-fileContents"><i class="fa fa-file"></i> File Contents</label>
+    <input type="text" id="node-input-fileContents" placeholder="File Contents">
+  </div>
   <div class="form-row input-fileExtension-row hidden">
     <label for="node-input-fileExtension"><i class="fa fa-file"></i>File Extension</label>
     <input type="text" id="node-input-fileExtension" placeholder="File Extension">
@@ -133,6 +137,7 @@
       operation: { value: 'list', required: true },
       filename: { value: '' },
       localFilename: { value: '' },
+        fileContents: { value: '' },
       fileExtension: { value: '.txt' },
       workdir: { value: '' },
       savedir: { value: '' },
@@ -152,6 +157,7 @@
       var savedir = $(".input-savedir-row");
       var filename = $(".input-filename-row");
       var localFilename = $(".input-localFilename-row");
+        var fileContents = $(".input-fileContents-row");
       var fileExtension = $(".input-fileExtension-row");
       $("#node-input-operation").change(function () {
         var id = $("#node-input-operation option:selected").val();
@@ -165,6 +171,8 @@
           filename.show();
           savedir.hide();
           localFilename.show();
+          fileContents.show();
+          fileExtension.show();
         } else if (id =='get') {
           filename.show();
           savedir.show();

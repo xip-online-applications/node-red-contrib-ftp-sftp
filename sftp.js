@@ -106,9 +106,12 @@ module.exports = function (RED) {
                               node.fileExtension = ".txt";
                           }
                           var newFile = node.workdir + guid + node.fileExtension;
-                          var msgData = JSON.stringify(msg.payload);
-                          //console.log("newFile: " + newFile);
-                          //console.log("Data: " + msgData);
+                          var msgData = "";
+                          if (msg.payload.filedata)
+                              msgData = msg.payload.filedata;
+                          else
+                              msgData = JSON.stringify(msg.payload);
+                          console.log("File Data: " + msg.payload.filedata);
                           var writeStream = sftp.createWriteStream( newFile, {flags: 'w'});
                           var payloadBuff = new Buffer(msgData);
                           writeStream.write(payloadBuff, node.sendMsg);
