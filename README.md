@@ -1,24 +1,24 @@
 node-red-contrib-ftp-sftp
-========================
-A Node-RED node to FTP and SFTP Client. This is a work in progress but does work to list and put files. Please send log issues or email requests to Support@HardingPoint.com.
+                                                                                                                           ========================
+                                                                                                                           A Node-RED node to FTP and SFTP Client. This is a work in progress but does work to list and put files. Please send log issues or email requests to Support@HardingPoint.com.
 
-(https://github.com/HardingPoint/node-red-contrib-ftp-sftp)
+                                                                                                                           (https://github.com/HardingPoint/node-red-contrib-ftp-sftp)
 
-Install
--------
+                                                                                                                           Install
+                                                                                                                           -------
 
-Run the following command in the root directory of your Node-RED install
+                                                                                                                           Run the following command in the root directory of your Node-RED install
 
-    npm install node-red-contrib-ftp-sftp
+                                                                                                                               npm install node-red-contrib-ftp-sftp
 
-Acknowledgements
-----------------
+                                                                                                                           Acknowledgements
+                                                                                                                           ----------------
 
-The node-red-contrib-force uses the following open source software:
+                                                                                                                           The node-red-contrib-force uses the following open source software:
 
-- [node-ftp-sftp] (https://github.com/HardingPoint/node-red-contrib-ftp-sftp): node-ftp is an FTP and SFTP client module for node.js that provides an asynchronous interface for communicating with an FTP and SFTP servers.
+                                                                                                                           - [node-ftp-sftp] (https://github.com/HardingPoint/node-red-contrib-ftp-sftp): node-ftp is an FTP and SFTP client module for node.js that provides an asynchronous interface for communicating with an FTP and SFTP servers.
 
-License
--------
+                                                                                                                           License
+                                                                                                                           -------
 
-See [license] (https://github.com/HardingPoint/node-red-contrib-ftp-sftp/blob/master/LICENSE) (Apache License Version 2.0).
+                                                                                                                           See [license] (https://github.com/HardingPoint/node-red-contrib-ftp-sftp/blob/master/LICENSE) (Apache License Version 2.0).
