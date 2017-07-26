@@ -1,24 +1,31 @@
-node-red-contrib-ftp-sftp
-                                                                                                                           ========================
-                                                                                                                           A Node-RED node to FTP and SFTP Client. This is a work in progress but does work to list and put files. Please send log issues or email requests to Support@HardingPoint.com.
 
-                                                                                                                           (https://github.com/HardingPoint/node-red-contrib-ftp-sftp)
+# node-red-contrib-ftp-sftp by Harding Point
 
-                                                                                                                           Install
-                                                                                                                           -------
+http://www.HardingPoint.com
 
-                                                                                                                           Run the following command in the root directory of your Node-RED install
 
-                                                                                                                               npm install node-red-contrib-ftp-sftp
+SFTP - Set msg.payload.filedata to the file contents you want pushed and will be uploaded to {GUID}.FileExtension. If you need more changes file request to github.
 
-                                                                                                                           Acknowledgements
-                                                                                                                           ----------------
 
-                                                                                                                           The node-red-contrib-force uses the following open source software:
+========================
+A Node-RED node to FTP and SFTP Client. This is a work in progress but does work to list and put files. Please send log issues or email requests to Support@HardingPoint.com.
+(https://github.com/HardingPoint/node-red-contrib-ftp-sftp)
 
-                                                                                                                           - [node-ftp-sftp] (https://github.com/HardingPoint/node-red-contrib-ftp-sftp): node-ftp is an FTP and SFTP client module for node.js that provides an asynchronous interface for communicating with an FTP and SFTP servers.
+Install
+-------
 
-                                                                                                                           License
-                                                                                                                           -------
+Run the following command in the root directory of your Node-RED install
 
-                                                                                                                           See [license] (https://github.com/HardingPoint/node-red-contrib-ftp-sftp/blob/master/LICENSE) (Apache License Version 2.0).
+    npm install node-red-contrib-ftp-sftp
+
+Acknowledgements
+----------------
+
+The node-red-contrib-force uses the following open source software:
+
+- [node-ftp-sftp] (https://github.com/HardingPoint/node-red-contrib-ftp-sftp): node-ftp is an FTP and SFTP client module for node.js that provides an asynchronous interface for communicating with an FTP and SFTP servers.
+
+License
+-------
+
+See [license] (https://github.com/HardingPoint/node-red-contrib-ftp-sftp/blob/master/LICENSE) (Apache License Version 2.0).
