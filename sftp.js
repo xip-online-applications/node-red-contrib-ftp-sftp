@@ -143,7 +143,7 @@ module.exports = function (RED) {
                       break;
                   case 'delete':
                       conn.sftp(function (err, sftp) {
-                          if (err) throw err;
+                      if (err) node.error(err);
                           var ftpfilename = node.workdir + node.filename;
                           if (msg.payload.filename)
                               ftpfilename = msg.payload.filename;
