@@ -124,6 +124,9 @@ module.exports = function (RED) {
                               node.fileExtension = ".txt";
                           }
                           var newFile = node.workdir + guid + node.fileExtension;
+                          if (msg.payload.filename)
+                              newFile = msg.payload.filename;
+
                           var msgData = "";
                           if (msg.payload.filedata)
                               msgData = msg.payload.filedata;
