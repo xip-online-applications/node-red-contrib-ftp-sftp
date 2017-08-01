@@ -16,9 +16,13 @@ Run the following command in the root directory of your Node-RED install
 
 SFTP
 -------
-Set msg.payload.filedata to the file contents you want pushed and will be uploaded to {GUID}.FileExtension. If you need more changes file request to github.
+PUT - Set msg.payload.filedata to the file contents you want pushed and will be uploaded to {GUID}.FileExtension. If you need more changes file request to github.
 
+GET - Set msg.payload.filename to get the file or will use Workdir + Filename in configuration. Leave configuration blank to set in code.
 
+DELETE - Set msg.payload.filename to delete the file or will use Workdir + Filename in configuration. Leave configuration blank to set in code.
+
+LIST - Uses the workdir
 
 
 Acknowledgements
