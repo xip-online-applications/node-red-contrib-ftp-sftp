@@ -91,18 +91,31 @@ module.exports = function (RED) {
               switch (node.operation) {
                   case 'list':
                       conn.sftp(function (err, sftp) {
-                          if (err) throw err;
+                          if (err) node.error(err);
                           sftp.readdir(node.workdir, node.sendMsg);
                       });
                       break;
                   case 'get':
-                      // Still need to add this.
+                      conn.sftp(function(err, sftp) {
+                          if (err) throw err;
+                          var ftpfilename = node.workdir + node.filename;
+                          var stream = sftp.createReadStream(ftpfilename);
+                          var buf = '';
+                          stream.on('data', function(d) {
+                              buf += d;
+                          }).on('end', function() {
+                              node.status({});
+                              conn.end();
+                              msg.payload = buf;
+                              node.send(msg);
+                          });
+                      });
                       break;
                   case 'put':
                       conn.sftp(function (err, sftp) {
                           if (err) throw err;
                           var guid = uuid.v4();
-                          if (node.fileExtension==""){
+                          if (node.fileExtension == "") {
                               node.fileExtension = ".txt";
                           }
                           var newFile = node.workdir + guid + node.fileExtension;
@@ -112,17 +125,27 @@ module.exports = function (RED) {
                           else
                               msgData = JSON.stringify(msg.payload);
                           console.log("File Data: " + msg.payload.filedata);
-                          var writeStream = sftp.createWriteStream( newFile, {flags: 'w'});
+                          var writeStream = sftp.createWriteStream(newFile, {flags: 'w'});
                           var payloadBuff = new Buffer(msgData);
                           writeStream.write(payloadBuff, node.sendMsg);
                       });
                       break;
                   case 'delete':
-                      // Still need to add this.
+                      conn.sftp(function (err, sftp) {
+                          if (err) throw err;
+                          console.log("Deleting File: " + node.workdir + node.filename);
+                          sftp.unlink(node.workdir + node.filename, function (err) {
+                              if (err) {
+                                  node.error(err);
+                              } else {
+                                  console.log("file unlinked");
+                              }
+                              conn.end();
+                          });
+                      });
                       break;
-                }
-              });
-          
+              }
+          });
           conn.on('error', function(error) {
             node.error(error);
           });
