@@ -156,6 +156,8 @@ module.exports = function (RED) {
                                   node.error(err);
                               } else {
                                   console.log("file unlinked");
+                                  node.status({});
+                                  node.send(msg);
                               }
                               conn.end();
                           });
