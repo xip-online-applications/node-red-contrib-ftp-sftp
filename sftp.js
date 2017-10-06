@@ -42,21 +42,28 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, n);
     var node = this;
 
-    console.log("hmac: " + n.hmac);
-    console.log("cipher: " + n.cipher);
+    console.log("[http://wwww.HardingPoint.com] SFTP - Config - hmac: " + n.hmac);
+    console.log("[http://wwww.HardingPoint.com] SFTP - Config - cipher: " + n.cipher);
 
     var keyFile = null;
+    var keyData = null;
     if (process.env.SFTP_SSH_KEY_FILE){
         keyFile = process.env.SFTP_SSH_KEY_FILE;
+        try{
+            keyData = fs.readFileSync(keyFile);
+        } catch (e){
+            keyData = null;
+            console.log("[http://wwww.HardingPoint.com] SFTP - Read Key File [" + keyFile + "] Exception : " + e);
+        }
     }
 
-    if (keyFile) {
-        console.log("[http://wwww.HardingPoint.com] Using privateKey: " + keyFile);
+    if (keyFile && keyData) {
+        console.log("[http://wwww.HardingPoint.com] SFTP - Using privateKey: " + keyFile);
         this.options = {
             host: n.host || 'localhost',
             port: n.port || 21,
             username: n.username,
-            privateKey: fs.readFileSync(keyFile),
+            privateKey: keyData,
             algorithms: {
                 // hmac: ['hmac-sha2-256', 'hmac-sha2-512', 'hmac-sha1', 'hmac-sha1-96'],
                 // cipher: ['aes256-cbc']
@@ -65,7 +72,7 @@ module.exports = function (RED) {
             }
         };
     } else {
-        console.log("[http://wwww.HardingPoint.com] Using User/Pwd");
+        console.log("[http://wwww.HardingPoint.com] SFTP - Using User/Pwd");
         this.options = {
             host: n.host || 'localhost',
             port: n.port || 21,
