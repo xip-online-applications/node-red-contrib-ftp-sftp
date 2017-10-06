@@ -14,6 +14,11 @@ Run the following command in the root directory of your Node-RED install
     npm install node-red-contrib-ftp-sftp
 
 
+Configuration
+-------
+
+process.env.SFTP_SSH_KEY_FILE - If you want to use private SSH key set this environment variable
+
 SFTP
 -------
 PUT - Set msg.payload.filedata to the file contents you want pushed and will be uploaded to {GUID}.FileExtension. If you need more changes file request to github.

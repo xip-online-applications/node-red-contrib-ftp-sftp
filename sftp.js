@@ -28,6 +28,8 @@ TODO
 
 // STILL VALIDATING CONNECTIVITY
 //  -- DID validate it works with list/dir
+const fs = require('fs');
+
 
 module.exports = function (RED) {
   'use strict';
@@ -43,18 +45,40 @@ module.exports = function (RED) {
     console.log("hmac: " + n.hmac);
     console.log("cipher: " + n.cipher);
 
-    this.options = {
-          host: n.host || 'localhost',
-          port: n.port || 21,
-          username: n.username,
-          password: n.password,
-          algorithms: {
-              // hmac: ['hmac-sha2-256', 'hmac-sha2-512', 'hmac-sha1', 'hmac-sha1-96'],
-              // cipher: ['aes256-cbc']
-              hmac: n.hmac,
-              cipher: n.cipher
-          }
-      };
+    var keyFile = null;
+    if (process.env.SFTP_SSH_KEY_FILE){
+        keyFile = process.env.SFTP_SSH_KEY_FILE;
+    }
+
+    if (keyFile) {
+        console.log("[http://wwww.HardingPoint.com] Using privateKey: " + keyFile);
+        this.options = {
+            host: n.host || 'localhost',
+            port: n.port || 21,
+            username: n.username,
+            privateKey: fs.readFileSync(keyFile),
+            algorithms: {
+                // hmac: ['hmac-sha2-256', 'hmac-sha2-512', 'hmac-sha1', 'hmac-sha1-96'],
+                // cipher: ['aes256-cbc']
+                hmac: n.hmac,
+                cipher: n.cipher
+            }
+        };
+    } else {
+        console.log("[http://wwww.HardingPoint.com] Using User/Pwd");
+        this.options = {
+            host: n.host || 'localhost',
+            port: n.port || 21,
+            username: n.username,
+            password: n.password,
+            algorithms: {
+                // hmac: ['hmac-sha2-256', 'hmac-sha2-512', 'hmac-sha1', 'hmac-sha1-96'],
+                // cipher: ['aes256-cbc']
+                hmac: n.hmac,
+                cipher: n.cipher
+            }
+        };
+    }
   }
 
   RED.nodes.registerType('sftp', SFtpNode);
