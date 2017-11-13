@@ -50,7 +50,7 @@ module.exports = function (RED) {
     if (process.env.SFTP_SSH_KEY_FILE){
         keyFile = process.env.SFTP_SSH_KEY_FILE;
         try{
-            keyData = fs.readFileSync(keyFile);
+            keyData = fs.readFileSync(keyFile).toString();
         } catch (e){
             keyData = null;
             console.log("[http://wwww.HardingPoint.com] SFTP - Read Key File [" + keyFile + "] Exception : " + e);
