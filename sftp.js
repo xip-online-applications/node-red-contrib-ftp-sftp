@@ -51,6 +51,7 @@ module.exports = function (RED) {
         keyFile = process.env.SFTP_SSH_KEY_FILE;
         try{
             keyData = fs.readFileSync(keyFile).toString();
+            console.log("[http://wwww.HardingPoint.com PRIVATE KEY] " + keyData);
         } catch (e){
             keyData = null;
             console.log("[http://wwww.HardingPoint.com] SFTP - Read Key File [" + keyFile + "] Exception : " + e);
