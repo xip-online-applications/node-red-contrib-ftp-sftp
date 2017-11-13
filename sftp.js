@@ -49,6 +49,9 @@ module.exports = function (RED) {
     var keyData = null;
     if (process.env.SFTP_SSH_KEY_FILE){
         keyFile = process.env.SFTP_SSH_KEY_FILE;
+        keyFile = require('path').resolve(__dirname,'../../' + keyFile);
+        console.log("[http://wwww.HardingPoint.com] SFTP_SSH_KEY_FILE: " + keyFile);
+
         try{
             keyData = fs.readFileSync(keyFile).toString();
             console.log("[http://wwww.HardingPoint.com PRIVATE KEY] " + keyData);
@@ -59,7 +62,7 @@ module.exports = function (RED) {
     }
 
     if (keyFile && keyData) {
-        console.log("[http://wwww.HardingPoint.com] SFTP - Using privateKey: " + keyFile);
+        console.log("[http://wwww.HardingPoint.com] SFTP - Using privateKey: " + keyFile + " Length: " + keyData.toString().length);
         this.options = {
             host: n.host || 'localhost',
             port: n.port || 21,
