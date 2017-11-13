@@ -63,6 +63,7 @@ module.exports = function (RED) {
             host: n.host || 'localhost',
             port: n.port || 21,
             username: n.username,
+            password: n.password,
             privateKey: keyData,
             algorithms: {
                 // hmac: ['hmac-sha2-256', 'hmac-sha2-512', 'hmac-sha1', 'hmac-sha1-96'],
