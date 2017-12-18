@@ -18,7 +18,6 @@ module.exports = function (RED) {
   'use strict';
   var ftp = require('ftp');
   var fs = require('fs');
-  var uuid = require('node-uuid');
 
     const ReadableStream = require('stream');
 
@@ -100,7 +99,9 @@ module.exports = function (RED) {
                     });
                     break;
                 case 'put':
-                    var guid = uuid.v4();
+                    var d = new Date();
+                    var guid = d.getTime().toString();
+
                     if (node.fileExtension == "") {
                         node.fileExtension = ".txt";
                     }

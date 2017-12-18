@@ -30,7 +30,6 @@
   "homepage": "https://github.com/HardingPoint/node-red-contrib-ftp-sftp#readme",
   "dependencies": {
     "ftp": "^0.3.10",
-    "node-uuid": "^1.4.8",
     "ssh2-sftp-client": "^1.1.0",
     "jsftp": "git+https://github.com/HardingPoint/jsftp.git"
   }

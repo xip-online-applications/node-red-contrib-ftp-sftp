@@ -36,7 +36,6 @@ module.exports = function (RED) {
 
   var sftp = require('ssh2').Client;
   var fs = require('fs');
-  var uuid = require('node-uuid');
 
   function SFtpNode(n) {
     RED.nodes.createNode(this, n);
@@ -155,7 +154,8 @@ module.exports = function (RED) {
                   case 'put':
                       conn.sftp(function (err, sftp) {
                           if (err) node.error(err);
-                          var guid = uuid.v4();
+                          var d = new Date();
+                          var guid = d.getTime().toString();
                           if (node.fileExtension == "") {
                               node.fileExtension = ".txt";
                           }
