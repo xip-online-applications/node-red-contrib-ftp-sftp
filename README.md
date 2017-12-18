@@ -33,12 +33,17 @@ LIST - Uses the workdir
 Sample Function Node 
 -------
 
+<PRE>
+// ----------------------------------------------------
+//      All functions above use information.
+//      Sample Javascript Used In Function Node
+// ----------------------------------------------------
 msg.payload = {};
 msg.payload.filename="./SAMPLE_FILE.txt"; // Full Path
 msg.payload.filedata='{}'; // Needs to be a string
 return msg;
-
-// All functions above use information 
+// ----------------------------------------------------
+</PRE>
 
 Acknowledgements
 ----------------
