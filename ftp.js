@@ -18,20 +18,25 @@ module.exports = function (RED) {
   'use strict';
   var ftp = require('ftp');
   var fs = require('fs');
+  var uuid = require('node-uuid');
 
-  function FtpNode(n) {
+    const ReadableStream = require('stream');
+
+    function FtpNode(n) {
     RED.nodes.createNode(this, n);
     var node = this;
+
     this.options = {
-      'host': n.host || 'localhost',
-      'port': n.port || 21,
-      'secure': n.secure || false,
-      'secureOptions': n.secureOptions,
-      'user': n.user || 'anonymous',
-      'password': n.password || 'anonymous@',
-      'connTimeout': n.connTimeout || 10000,
-      'pasvTimeout': n.pasvTimeout || 10000,
-      'keepalive': n.keepalive || 10000
+        'host': n.host || 'localhost',
+        'port': n.port || 21,
+        'secure': n.secure || false,
+        'secureOptions': n.secureOptions,
+        'user': n.user || 'anonymous',
+        'password': n.password || 'anonymous@',
+        'pass': n.password || 'anonymous@',
+        'connTimeout': n.connTimeout || 10000,
+        'pasvTimeout': n.pasvTimeout || 10000,
+        'keepalive': n.keepalive || 10000
     };
   }
 
@@ -43,75 +48,104 @@ module.exports = function (RED) {
     this.operation = n.operation;
     this.filename = n.filename;
     this.localFilename = n.localFilename;
-    this.workdir = n.workdir;
-    this.savedir = n.savedir;
+    this.workdir = n.workdir || './';
+    this.savedir = n.savedir || './';
     this.ftpConfig = RED.nodes.getNode(this.ftp);
 
     if (this.ftpConfig) {
-
       var node = this;
-
+      console.log("this.ftpConfig: " + JSON.stringify(this.ftpConfig));
       node.on('input', function (msg) {
         try {
-          
-          var conn = new ftp();
-        
-          var filename = node.filename || msg.filename || '';
-          var localFilename = node.localFilename || msg.localFilename;
-          var workdir = node.workdir || msg.workdir || '';
-          var savedir = node.savedir || msg.savedir || '';
+            var workdir = node.workdir || msg.workdir || '';
+            var JSFtp = require("jsftp");
 
-          if (!localFilename) {
-            localFilename = msg.payload ? new Buffer(msg.payload, 'utf8') : '';
-          }
-
-          this.sendMsg = function (err, result) {
-            if (err) {
-              node.error(err.toString());
-              node.status({ fill: 'red', shape: 'ring', text: 'failed' });
-            }
-            node.status({});
-            if (node.operation == 'get') {
-              result.once('close', function() { conn.end(); });
-              result.pipe(fs.createWriteStream(savedir + filename));
-              msg.payload = 'Get operation successful. ' + savedir + filename;
-            } else if (node.operation == 'put') {
-              conn.end();
-              msg.payload = 'Put operation successful.';
-            } else {
-              conn.end();
-              msg.payload = result;
-            }
-            msg.filename = filename;
-            msg.localFilename = localFilename;
-            node.send(msg);
-          };
-
-          conn.on('ready', function () {
             switch (node.operation) {
-              case 'list':
-                conn.list(workdir, node.sendMsg);
-                break;
-              case 'get':
-                conn.get(workdir + filename, node.sendMsg);
-                break;
-              case 'put':
-                conn.put(localFilename, filename, node.sendMsg);
-                break;
-              case 'delete':
-                conn.delete(filename, node.sendMsg);
-                break;
-            }
-          });
-          
-          conn.on('error', function(error) {
-            node.error(error);
-          });
+                case 'list':
+                    var Ftp = new JSFtp(node.ftpConfig.options);
+                    console.log("[http://www.hardingpoint.com] FTP List:" + workdir.toString());
+                    Ftp.ls(workdir,function(err,data){
+                        // console.log(data);
+                        msg.payload = data;
+                        node.send(msg);
+                    });
+                    break;
+                case 'get':
+                    var Ftp = new JSFtp(node.ftpConfig.options);
+                    var ftpfilename = node.workdir + node.filename;
+                    if (msg.payload.filename)
+                        ftpfilename = msg.payload.filename;
+                    var str = '';
+                    console.log("[http://www.hardingpoint.com] FTP Get:" + ftpfilename);
+                    Ftp.get(ftpfilename, function(err, socket){
+                        if (err) {
+                            node.error(err);
+                        }else{
+                            socket.on("data", function(d){
+                                str += d.toString();
+                            });
 
-          conn.connect(node.ftpConfig.options);
+                            socket.on("close", function(err) {
+                                if (err)
+                                    node.error(err);
+
+                                node.status({});
+                                msg.payload = {};
+                                msg.payload.filedata = str;
+                                msg.payload.filename = ftpfilename;
+                                node.send(msg);
+                            });
+                            socket.resume();
+                        }
+                    });
+                    break;
+                case 'put':
+                    var guid = uuid.v4();
+                    if (node.fileExtension == "") {
+                        node.fileExtension = ".txt";
+                    }
+                    var newFile = node.workdir + guid + node.fileExtension;
+                    var msgData = '';
+                    if (msg.payload.filename)
+                        newFile = msg.payload.filename;
+
+                    if (msg.payload.filedata)
+                        msgData = msg.payload.filedata;
+                    else
+                        msgData = JSON.stringify(msg.payload);
+
+                    console.log("[http://www.hardingpoint.com] FTP Put:" + newFile);
+
+                    var Ftp = new JSFtp(node.ftpConfig.options);
+
+                    var buffer = new Buffer(msgData);
+
+                    Ftp.put(buffer, newFile, function(err){
+                        if (err)
+                            node.error(err);
+                        else{
+                            node.status({});
+                            msg.payload.filename = newFile;
+                            node.send(msg);
+                        }
+                    });
+                    break;
+                case 'delete':
+                    console.log("[http://www.hardingpoint.com] FTP Delete:" + msg.payload.filename);
+                    var Ftp = new JSFtp(node.ftpConfig.options);
+                    Ftp.raw("dele", msg.payload.filename, function(err, data) {
+                        if (err) node.error(err);
+                        else{
+                            node.status({});
+                            node.send(msg);
+                        }
+                    });
+                    break;
+            }
 
       } catch (error) {
-          node.error(error);
+          console.log("Caught Error:" + error);
+         node.error(error);
       }
     });
     } else {
