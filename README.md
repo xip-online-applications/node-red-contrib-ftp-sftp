@@ -19,7 +19,7 @@ Configuration
 
 process.env.SFTP_SSH_KEY_FILE - If you want to use private SSH key set this environment variable
 
-SFTP
+SFTP & FTP
 -------
 PUT - Set msg.payload.filedata to the file contents you want pushed and will be uploaded to {GUID}.FileExtension. If you need more changes file request to github.
 
@@ -29,6 +29,16 @@ DELETE - Set msg.payload.filename to delete the file or will use Workdir + Filen
 
 LIST - Uses the workdir
 
+
+Sample Function Node 
+-------
+
+msg.payload = {};
+msg.payload.filename="./SAMPLE_FILE.txt"; // Full Path
+msg.payload.filedata='{}'; // Needs to be a string
+return msg;
+
+// All functions above use information 
 
 Acknowledgements
 ----------------
