@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-ftp-sftp",
-  "version": "1.8.1",
+  "version": "1.8.5",
   "description": "A node-red node that support FTP and SFTP file transfer using $() environment variables to control the ftp connection details",
   "main": "sftp.js",
   "scripts": {
@@ -30,7 +30,7 @@
   "homepage": "https://github.com/HardingPoint/node-red-contrib-ftp-sftp#readme",
   "dependencies": {
     "ftp": "^0.3.10",
-    "ssh2-sftp-client": "^1.1.0",
-    "jsftp": "git+https://github.com/HardingPoint/jsftp.git"
+    "jsftp": "git+https://github.com/HardingPoint/jsftp.git",
+    "ssh2-sftp-client": "^1.1.0"
   }
 }

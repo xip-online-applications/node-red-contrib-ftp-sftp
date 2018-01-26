@@ -138,14 +138,21 @@ module.exports = function (RED) {
                           if (msg.payload.filename)
                               ftpfilename = msg.payload.filename;
 
+                          var bufferarray = [];
+
                           var stream = sftp.createReadStream(ftpfilename);
                           var buf = '';
                           stream.on('data', function(d) {
-                              buf += d;
+                              //buf += d;
+                              bufferarray.push(d);
                           }).on('end', function() {
                               node.status({});
                               conn.end();
-                              msg.payload.filedata = buf;
+                              msg.payload.filedata = "";
+                              for (var i = 0; i < bufferarray.length; i++) {
+                                  msg.payload.filedata = msg.payload.filedata + bufferarray[i];
+                              }
+                              // msg.payload.filedata = buf;
                               msg.payload.filename = ftpfilename;
                               node.send(msg);
                           });
