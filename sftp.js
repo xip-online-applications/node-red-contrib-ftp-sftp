@@ -139,12 +139,47 @@ module.exports = function (RED) {
                               ftpfilename = msg.payload.filename;
 
                           var bufferarray = [];
+                          var stream = sftp.createReadStream(ftpfilename,{ highWaterMark: 1024, bufferSize: 1024 });
 
-                          var stream = sftp.createReadStream(ftpfilename);
+                          /*
+                              {
+                              flags: 'r',
+                              encoding: 'utf-8',
+                              fd: null,
+                              bufferSize: 10000000
+                          });*/
+
+                          var counter = 0;
                           var buf = '';
+                          var byteSize = 65536;
+
                           stream.on('data', function(d) {
-                              //buf += d;
-                              bufferarray.push(d);
+                              buf += d;
+                              counter++;
+                              console.log("Read Chunk ("+ counter + "): " + d.length + " Length: " + buf.length);
+                              //bufferarray.push(d);
+                          }).on('end', function() {
+                              node.status({});
+                              conn.end();
+                              msg.payload.filedata = "";
+                              //for (var i = 0; i < bufferarray.length; i++) {
+                              //    msg.payload.filedata = msg.payload.filedata + bufferarray[i];
+                              //}
+                              msg.payload.filedata = buf;
+                              msg.payload.filename = ftpfilename;
+                              node.send(msg);
+                          });
+
+                          /*
+                          var byteSize = 10000000;
+                          stream.on("readable", function() {
+                              var chunk;
+                              while ( (chunk = stream.read(byteSize)) ) {
+                                  //if (chunk.length != byteSize){
+                                      console.log("Read Chunk: " + chunk.length);
+                                  //}
+                                  bufferarray.push(chunk);
+                              }
                           }).on('end', function() {
                               node.status({});
                               conn.end();
@@ -156,6 +191,26 @@ module.exports = function (RED) {
                               msg.payload.filename = ftpfilename;
                               node.send(msg);
                           });
+                          */
+                          /*
+                            stream.on('data', function(d) {
+                              buf += d;
+                              counter++;
+                              console.log("Read Chunk ("+ counter + "): " + d.length);
+                              //bufferarray.push(d);
+                          }).on('end', function() {
+                              node.status({});
+                              conn.end();
+                              msg.payload.filedata = "";
+                              //for (var i = 0; i < bufferarray.length; i++) {
+                              //    msg.payload.filedata = msg.payload.filedata + bufferarray[i];
+                              //}
+                              msg.payload.filedata = buf;
+                              msg.payload.filename = ftpfilename;
+                              node.send(msg);
+                          });
+
+                          */
                       });
                       break;
                   case 'put':
