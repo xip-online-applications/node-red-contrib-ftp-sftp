@@ -156,7 +156,7 @@ module.exports = function (RED) {
                           stream.on('data', function(d) {
                               buf += d;
                               counter++;
-                              console.log("Read Chunk ("+ counter + "): " + d.length + " Length: " + buf.length);
+                              // console.log("Read Chunk ("+ counter + "): " + d.length + " Length: " + buf.length);
                               //bufferarray.push(d);
                           }).on('end', function() {
                               node.status({});
