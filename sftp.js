@@ -162,6 +162,7 @@ module.exports = function (RED) {
                               node.status({});
                               conn.end();
                               msg.payload.filedata = "";
+                              console.log("Read Chunks " + counter + " Length: " + buf.length);
                               //for (var i = 0; i < bufferarray.length; i++) {
                               //    msg.payload.filedata = msg.payload.filedata + bufferarray[i];
                               //}
