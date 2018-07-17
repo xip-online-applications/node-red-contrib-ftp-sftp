@@ -109,6 +109,18 @@ module.exports = function (RED) {
       var node = this;
       node.on('input', function (msg) {
         try {
+
+          node.workdir = node.workdir || msg.workdir || "./";
+          node.savedir = node.savedir || msg.savedir || "./";
+          node.localFilename = node.localFilename || msg.localFilename || "";
+          node.localFilename = node.fileExtension || msg.fileExtension || "";
+
+          /*SFTP options*/
+          node.sftpConfig.options.host = msg.host || node.sftpConfig.options.host ;
+          node.sftpConfig.options.port = msg.port || node.sftpConfig.options.port ;
+          node.sftpConfig.options.username = msg.user || node.sftpConfig.options.username || "";
+          node.sftpConfig.options.password = msg.password || node.sftpConfig.options.password || "";
+
           var conn = new sftp();
 
           this.sendMsg = function (err, result) {

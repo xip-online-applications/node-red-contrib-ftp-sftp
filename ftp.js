@@ -47,8 +47,8 @@ module.exports = function (RED) {
     this.operation = n.operation;
     this.filename = n.filename;
     this.localFilename = n.localFilename;
-    this.workdir = n.workdir || './';
-    this.savedir = n.savedir || './';
+    this.workdir = n.workdir;
+    this.savedir = n.savedir;
     this.ftpConfig = RED.nodes.getNode(this.ftp);
 
     if (this.ftpConfig) {
@@ -56,14 +56,24 @@ module.exports = function (RED) {
       console.log("this.ftpConfig: " + JSON.stringify(this.ftpConfig));
       node.on('input', function (msg) {
         try {
-            var workdir = node.workdir || msg.workdir || '';
+            node.workdir = node.workdir || node.workdir || './';
+            node.savedir = node.savedir || node.savedir || './';
+            node.localFilename = node.localFilename || msg.localFilename || '';
+
+            /*FTP options*/
+            node.ftpConfig.options.host = msg.host || node.ftpConfig.options.host;
+            node.ftpConfig.options.port = msg.port || node.ftpConfig.options.port;
+            node.ftpConfig.options.user = msg.user || node.ftpConfig.options.user;
+            node.ftpConfig.options.password = msg.password || node.ftpConfig.options.password;
+            node.ftpConfig.options.pass = msg.pass || msg.password || node.ftpConfig.options.pass;
+
             var JSFtp = require("jsftp");
 
             switch (node.operation) {
                 case 'list':
                     var Ftp = new JSFtp(node.ftpConfig.options);
-                    console.log("[http://www.hardingpoint.com] FTP List:" + workdir.toString());
-                    Ftp.ls(workdir,function(err,data){
+                    console.log("[http://www.hardingpoint.com] FTP List:" + node.workdir.toString());
+                    Ftp.ls(node.workdir,function(err,data){
                         // console.log(data);
                         msg.payload = data;
                         node.send(msg);
