@@ -56,8 +56,8 @@ module.exports = function (RED) {
       console.log("this.ftpConfig: " + JSON.stringify(this.ftpConfig));
       node.on('input', function (msg) {
         try {
-            node.workdir = node.workdir || node.workdir || './';
-            node.savedir = node.savedir || node.savedir || './';
+            node.workdir = node.workdir || msg.workdir || './';
+            node.savedir = node.savedir || msg.savedir || './';
             node.localFilename = node.localFilename || msg.localFilename || '';
 
             /*FTP options*/
