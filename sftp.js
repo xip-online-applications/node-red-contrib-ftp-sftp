@@ -113,7 +113,7 @@ module.exports = function (RED) {
           node.workdir = node.workdir || msg.workdir || "./";
           node.savedir = node.savedir || msg.savedir || "./";
           node.localFilename = node.localFilename || msg.localFilename || "";
-          node.localFilename = node.fileExtension || msg.fileExtension || "";
+          node.fileExtension = node.fileExtension || msg.fileExtension || "";
 
           /*SFTP options*/
           node.sftpConfig.options.host = msg.host || node.sftpConfig.options.host ;
