@@ -136,6 +136,7 @@ module.exports = function (RED) {
                             node.error(err, msg);
                         else{
                             node.status({});
+                            msg.payload = {};
                             msg.payload.filename = newFile;
                             node.send(msg);
                         }
