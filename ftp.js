@@ -46,6 +46,7 @@ module.exports = function (RED) {
     this.ftp = n.ftp;
     this.operation = n.operation;
     this.filename = n.filename;
+    this.fileExtension = n.fileExtension;
     this.workdir = n.workdir;
     this.ftpConfig = RED.nodes.getNode(this.ftp);
 
@@ -55,6 +56,7 @@ module.exports = function (RED) {
       node.on('input', function (msg) {
         try {
             node.workdir = node.workdir || msg.workdir || './';
+            node.fileExtension = node.fileExtension || msg.fileExtension || "";
 
             /*FTP options*/
             node.ftpConfig.options.host = msg.host || node.ftpConfig.options.host;
