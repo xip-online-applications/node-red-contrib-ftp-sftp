@@ -189,7 +189,7 @@ module.exports = function (RED) {
                               msgData = JSON.stringify(msg.payload);
 
                           var writeStream = sftp.createWriteStream(newFile, {flags: 'w'});
-                          var payloadBuff = new Buffer(msgData);
+                          // var payloadBuff = new Buffer(msgData);
                           // writeStream.write(payloadBuff, node.sendMsg);
                           writeStream.write(msgData, function(err, result){
                               node.status({});
