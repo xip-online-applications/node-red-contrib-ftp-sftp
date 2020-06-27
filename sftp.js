@@ -176,14 +176,16 @@ module.exports = function (RED) {
                       conn.sftp(function (err, sftp) {
                           if (err)
                               node.error(err, msg);
-                          var d = new Date();
-                          var guid = d.getTime().toString();
-                          if (node.fileExtension == "") {
-                              node.fileExtension = ".txt";
-                          }
-                          var newFile = node.workdir + guid + node.fileExtension;
-                          if (msg.payload.filename)
+                          var newFile = '';
+                          if (msg.payload.filename) {
                               newFile = msg.payload.filename;
+                          } else if (node.filename == "") {
+                              var d = new Date();
+                              var guid = d.getTime().toString();
+                              newFile = node.workdir + guid + ".txt";
+                          } else {
+                              newFile = node.workdir + node.filename;
+                          }
 
                           var msgData = "";
                           if (msg.payload.filedata)
@@ -191,6 +193,7 @@ module.exports = function (RED) {
                           else
                               msgData = JSON.stringify(msg.payload);
 
+                          console.log("[http://www.hardingpoint.com] SFTP Put:" + newFile);
                           var writeStream = sftp.createWriteStream(newFile, {flags: 'w'});
                           // var payloadBuff = new Buffer(msgData);
                           // writeStream.write(payloadBuff, node.sendMsg);
