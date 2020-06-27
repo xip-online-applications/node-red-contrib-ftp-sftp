@@ -51,7 +51,7 @@ module.exports = function (RED) {
 
     if (this.ftpConfig) {
       var node = this;
-      console.log("this.ftpConfig: " + JSON.stringify(this.ftpConfig));
+      // console.log("FTP ftpConfig: " + JSON.stringify(this.ftpConfig));
       node.on('input', function (msg) {
         try {
             node.workdir = node.workdir || msg.workdir || './';
@@ -163,7 +163,7 @@ module.exports = function (RED) {
             }
 
       } catch (error) {
-          console.log("Caught Error:" + error);
+          console.log("FTP Caught Error:" + error);
           node.error(error, msg);
       }
     });

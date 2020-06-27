@@ -164,7 +164,7 @@ module.exports = function (RED) {
                           }).on('end', function() {
                               node.status({});
                               conn.end();
-                              console.log("Read Chunks " + counter + " Length: " + buf.length);
+                              console.log("SFTP Read Chunks " + counter + " Length: " + buf.length);
                               msg.payload = {};
                               msg.payload.filedata = buf;
                               msg.payload.filename = ftpfilename;
@@ -213,12 +213,12 @@ module.exports = function (RED) {
                           var ftpfilename = node.workdir + node.filename;
                           if (msg.payload.filename)
                               ftpfilename = msg.payload.filename;
-                          console.log("Deleting File: " + ftpfilename);
+                          console.log("SFTP Deleting File: " + ftpfilename);
                           sftp.unlink(ftpfilename, function (err) {
                               if (err) {
                                   node.error(err, msg);
                               } else {
-                                  console.log("file unlinked");
+                                  console.log("SFTP file unlinked");
                                   node.status({});
                                   msg.payload = {};
                                   msg.payload.filename = ftpfilename;
