@@ -128,6 +128,20 @@
   </div>
 </script>
 
+<script type="text/x-red" data-help-name="sftp in">
+    <h1>SFTP Client</h1>
+    <p>
+    <b>Node config:</b>
+    process.env.<b>SFTP_SSH_KEY_FILE</b> - If you want to use private SSH key set this environment variable
+    <ul>
+    <li><b>PUT</b> - Set <code>msg.payload.filedata</code> to the file contents you want pushed and will be uploaded to {GUID}.FileExtension. If you need more changes file request to github.</li>
+    <li><b>GET</b> - Set <code>msg.payload.filename</code> to get the file or will use Workdir + Filename in configuration. Leave configuration blank to set in code.</li>
+    <li><b>DELETE</b> - Set <code>msg.payload.filename</code> to delete the file or will use Workdir + Filename in configuration. Leave configuration blank to set in code.</li>
+    <li><b>LIST</b> - Uses the workdir</li>
+    </ul>
+    </p>
+</script>
+
 <script type="text/javascript">
   RED.nodes.registerType('sftp in', {
     category: 'storage-input',

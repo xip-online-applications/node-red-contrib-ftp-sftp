@@ -110,6 +110,19 @@
   </div>
 </script>
 
+<script type="text/x-red" data-help-name="ftp in">
+    <h1>FTP Client</h1>
+    <p>
+    <b>Node config:</b>
+    <ul>
+    <li><b>PUT</b> - Set <code>msg.payload.filedata</code> to the file contents you want pushed and will be uploaded to {GUID}.FileExtension. If you need more changes file request to github.</li>
+    <li><b>GET</b> - Set <code>msg.payload.filename</code> to get the file or will use Workdir + Filename in configuration. Leave configuration blank to set in code.</li>
+    <li><b>DELETE</b> - Set <code>msg.payload.filename</code> to delete the file or will use Workdir + Filename in configuration. Leave configuration blank to set in code.</li>
+    <li><b>LIST</b> - Uses the workdir</li>
+    </ul>
+    </p>
+</script>
+
 <script type="text/javascript">
   RED.nodes.registerType('ftp in', {
     category: 'storage-input',
