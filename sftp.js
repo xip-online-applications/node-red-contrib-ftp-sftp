@@ -233,7 +233,7 @@ module.exports = function (RED) {
           conn.connect(node.sftpConfig.options);
 
       } catch (error) {
-          node.error(error);
+          node.error(error, msg);
       }
     });
     } else {
