@@ -92,6 +92,10 @@
     <label for="node-input-filename"><i class="fa fa-file"></i> Filename</label>
     <input type="text" id="node-input-filename" placeholder="Filename">
   </div>
+  <div class="form-row input-fileExtension-row hidden">
+    <label for="node-input-fileExtension"><i class="fa fa-file"></i> File Extension</label>
+    <input type="text" id="node-input-fileExtension" placeholder="File Extension">
+  </div>
   <div class="form-row input-savedir-row hidden">
     <label for="node-input-savedir"><i class="fa fa-folder-open"></i> Save Directory</label>
     <input type="text" id="node-input-savedir" placeholder="Save Directory">
@@ -115,6 +119,7 @@
       operation: { value: 'list', required: true },
       filename: { value: '' },
       localFilename: { value: '' },
+      fileExtension: { value: '.txt' },
       workdir: { value: '' },
       savedir: { value: '' },
       name: { value: '' }
@@ -131,17 +136,22 @@
     },
     oneditprepare: function () {
       var filename = $(".input-filename-row");
+      var fileExtension = $(".input-fileExtension-row");
       $("#node-input-operation").change(function () {
         var id = $("#node-input-operation option:selected").val();
         console.log(id);
         if (id == 'list') {
           filename.hide();
+          fileExtension.hide();
         } else if (id == 'put') {
           filename.show();
+          fileExtension.show();
         } else if (id =='get') {
           filename.show();
+          fileExtension.hide();
         } else {
           filename.show();
+          fileExtension.hide();
         }
       });
     }

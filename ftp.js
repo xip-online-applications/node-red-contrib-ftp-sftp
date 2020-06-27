@@ -111,10 +111,8 @@ module.exports = function (RED) {
                     } else if (node.filename == "") {
                         var d = new Date();
                         var guid = d.getTime().toString();
-
-                        if (node.fileExtension == "") {
+                        if (node.fileExtension == "")
                             node.fileExtension = ".txt";
-                        }
                         newFile = node.workdir + guid + node.fileExtension;
                     } else {
                         newFile = node.workdir + node.filename;
