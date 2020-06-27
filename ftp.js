@@ -150,7 +150,8 @@ module.exports = function (RED) {
                     console.log("[http://www.hardingpoint.com] FTP Delete:" + delFile);
                     var Ftp = new JSFtp(node.ftpConfig.options);
                     Ftp.raw("dele", delFile, function(err, data) {
-                        if (err) node.error(err, msg);
+                        if (err)
+                            node.error(err, msg);
                         else{
                             node.status({});
                             msg.payload = {};
@@ -163,7 +164,7 @@ module.exports = function (RED) {
 
       } catch (error) {
           console.log("Caught Error:" + error);
-         node.error(error, msg);
+          node.error(error, msg);
       }
     });
     } else {

@@ -134,13 +134,15 @@ module.exports = function (RED) {
               switch (node.operation) {
                   case 'list':
                       conn.sftp(function (err, sftp) {
-                          if (err) node.error(err, msg);
+                          if (err)
+                              node.error(err, msg);
                           sftp.readdir(node.workdir, node.sendMsg);
                       });
                       break;
                   case 'get':
                       conn.sftp(function(err, sftp) {
-                          if (err) node.error(err, msg);
+                          if (err)
+                              node.error(err, msg);
                           var ftpfilename = node.workdir + node.filename;
 
                           if (msg.payload.filename)
@@ -172,7 +174,8 @@ module.exports = function (RED) {
                       break;
                   case 'put':
                       conn.sftp(function (err, sftp) {
-                          if (err) node.error(err, msg);
+                          if (err)
+                              node.error(err, msg);
                           var d = new Date();
                           var guid = d.getTime().toString();
                           if (node.fileExtension == "") {
@@ -202,7 +205,8 @@ module.exports = function (RED) {
                       break;
                   case 'delete':
                       conn.sftp(function (err, sftp) {
-                      if (err) node.error(err, msg);
+                          if (err)
+                              node.error(err, msg);
                           var ftpfilename = node.workdir + node.filename;
                           if (msg.payload.filename)
                               ftpfilename = msg.payload.filename;
@@ -224,7 +228,7 @@ module.exports = function (RED) {
               }
           });
           conn.on('error', function(error) {
-            node.error(error, msg);
+              node.error(error, msg);
           });
           conn.connect(node.sftpConfig.options);
 
