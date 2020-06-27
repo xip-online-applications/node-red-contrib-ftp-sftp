@@ -99,10 +99,8 @@ module.exports = function (RED) {
     this.sftp = n.sftp;
     this.operation = n.operation;
     this.filename = n.filename;
-    this.localFilename = n.localFilename;
     this.fileExtension = n.fileExtension;
     this.workdir = n.workdir;
-    this.savedir = n.savedir;
     this.sftpConfig = RED.nodes.getNode(this.sftp);
 
     if (this.sftpConfig) {
@@ -111,8 +109,6 @@ module.exports = function (RED) {
         try {
 
           node.workdir = node.workdir || msg.workdir || "./";
-          node.savedir = node.savedir || msg.savedir || "./";
-          node.localFilename = node.localFilename || msg.localFilename || "";
           node.fileExtension = node.fileExtension || msg.fileExtension || "";
 
           /*SFTP options*/
